@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<extension version="1.6" type="plugin" group="content">
+   <name>plg_content_biblelink_xt</name>
+   <author>Dietmar Isenbart</author>
+   <creationDate>Januar 2011</creationDate>
+   <copyright>Copyright 2011 - Dietmar Isenbart - Ichthys-Soft - Freeware</copyright>
+   <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+   <authorEmail>di@di-side.de</authorEmail>
+   <authorUrl>http://di-side.de</authorUrl>
+   <version>110117</version>
+   <description>XML_DESCRIPTION</description>
+   <files>
+      <filename plugin="biblelinkxt">biblelinkxt.php</filename>
+      <filename>index.html</filename>
+	  <folder>language</folder>
+   </files>
+    <config>
+      <fields name="params">
+         <fieldset name="basic">
+         <field name="spacerz" type="spacer" default="" label="XML_LABEL_SPACERZ" description="XML_DESC_SPACERZ"></field>
+		<field name="selectsource" type="list" default="BS" label="XML_LABEL_SELECTSOURCE" description="XML_DESC_SELECTSOURCE">
+			<option value="BS">Bibleserver.com</option>
+			<option value="BG">BibleGateway.com</option>
+		</field>
+         <field name="spacerix" type="spacer" default="" label="____________________" description=""></field>
+         <field name="spaceri" type="spacer" default="" label="XML_LABEL_SPACERI" description="XML_DESC_SPACERI"></field>
+			<field name="bibletranslationBS" type="list" default="ELB" label="XML_LABEL_BIBLETRANSLATIONBS" description="XML_DESC_BIBLETRANSLATIONBS">
+				<option value="LUT">LUT - Luther 1984</option>
+				<option value="ELB">ELB - Rev. Elberfelder</option>
+				<option value="HFA">HFA - Hoffnung für alle</option>
+				<option value="SLT">SLT - Schlachter 2000</option>
+				<option value="NGÜ">NGÜ - Neue Genfer Übersetzung</option>
+				<option value="GNB">GNB - Gute Nachricht Bibel</option>
+				<option value="EU">EU - Einheitsübersetzung</option>
+				<option value="NL">NL - Neues Leben</option>
+				<option value="NIV">NIV - New International Version</option>
+				<option value="TNIV">TNIV - Today's New International Version</option>
+				<option value="NIRV">NIRV - New Int. Readers Version</option>
+				<option value="KJV">KJV - King James Version</option>
+				<option value="KJVS">KJVS - King James V. with Strong's Dictionary</option>
+				<option value="BDS">BDS - Bible du Semeur</option>
+				<option value="ITA">ITA - La Parola è Vita</option>
+				<option value="HTB">HTB - Het Boek</option>
+				<option value="CST">CST - Version La Biblia al Dia</option>
+				<option value="NVI">NVI - Nueva Versión Internacional</option>
+				<option value="PRT">PRT - O Livro</option>
+				<option value="NOR">NOR - En Levende Bok</option>
+				<option value="SVL">SVL - En Levande Bok</option>
+				<option value="DK">DK - Bibelen på hverdagsdansk</option>
+				<option value="POL">POL - Słowo Życia</option>
+				<option value="CEP">CEP - Český ekumenický překlad</option>
+				<option value="SNC">SNC - Slovo na cestu</option>
+				<option value="B21">B21 - Bible, překlad 21. století</option>
+				<option value="NPK">NPK - Nádej pre kazdého</option>
+				<option value="KAR">KAR - IBS-fordítás (Új Károli)</option>
+				<option value="HUN">HUN - Hungarian</option>
+				<option value="NTR">NTR - Noua traducere în limba românã</option>
+				<option value="BLG">BLG - Българската Библия</option>
+				<option value="CRO">CRO - Hrvatski</option>
+				<option value="RUS">RUS - Новый перевод на русский язык</option>
+				<option value="CRS">CRS - Священное Писание</option>
+				<option value="TR">TR - Türkçe</option>
+				<option value="ARA">ARA - عربي</option>
+				<option value="CUVS">CUVS - 中文和合本（简体）</option>
+				<option value="OT">OT - Hebrew OT</option>
+				<option value="LXX">LXX - Septuaginta</option>
+				<option value="VUL">VUL - Vulgata</option>
+				<option value="ABV">ABV - Hörbibel</option>
+            </field>
+			<field name="spacerii" type="spacer" default="" label="" description=""></field>
+			<field name="interfacelanguage" type="list" default="de" label="XML_LABEL_INTERFACELANGUAGE" description="XML_DESC_INTERFACELANGUAGE">
+				<option value="1">de - Deutsch</option>
+				<option value="2">en - English</option>
+				<option value="3">fr - français</option>
+				<option value="4">it - italiano</option>
+				<option value="10">nl - Nederlands</option>
+				<option value="5">es - español</option>
+				<option value="6">pt - português</option>
+				<option value="9">no - Norsk</option>
+				<option value="8">sv - svenska</option>
+				<option value="20">dk - Dansk</option>
+				<option value="19">pl - Polski</option>
+				<option value="11">cz - čeština</option>
+				<option value="12">sk - Slovák</option>
+				<option value="15">hu - Magyar</option>
+				<option value="13">ro - român</option>
+				<option value="16">bg - Български</option>
+				<option value="14">hr - hrvatski</option>
+				<option value="7">ru - Pyсский</option>
+				<option value="18">tr - Türkçe</option>
+				<option value="21">cn - 中文</option>
+				<option value="17">ar - عربي</option>
+			</field>
+         <field name="spaceriiix" type="spacer" default="" label="____________________" description=""></field>
+         <field name="spaceriii" type="spacer" default="" label="XML_LABEL_SPACERIII" description="XML_DESC_SPACERIII"></field>
+			<field name="bibletranslationBG" type="list" default="LUTH1545" label="XML_LABEL_BIBLETRANSLATIONBG" description="XML_DESC_BIBLETRANSLATIONBG">
+				<option value="AMU">Amuzgo de Guerrero</option>
+				<option value="ALAB">Arabic Life Application Bible</option>
+				<option value="BULG">Bulgarian Bible</option>
+				<option value="BG1940">1940 Bulgarian Bible</option>
+				<option value="CCO">Chinanteco de Comaltepec</option>
+				<option value="CKW">Cakchiquel Occidental</option>
+				<option value="HCV">Haitian Creole Version</option>
+				<option value="SNC">Slovo na cestu</option>
+				<option value="DN1933">Dette er Biblen pÃ¥ dansk</option>
+				<option value="HOF">Hoffnung für Alle</option>
+				<option value="LUTH1545">Luther Bibel 1545</option>
+				<option value="NIV">New International Version</option>
+				<option value="NASB">New American Standard Bible</option>
+				<option value="MSG">The Message</option>
+				<option value="AMP">Amplified Bible</option>
+				<option value="NLT">New Living Translation</option>
+				<option value="KJV">King James Version</option>
+				<option value="ESV">English Standard Version</option>
+				<option value="CEV">Contemporary English Version</option>
+				<option value="NKJV">New King James Version</option>
+				<option value="NCV">New Century Version</option>
+				<option value="GW">GOD’S WORD Translation</option>
+				<option value="KJ21">21st Century King James Version</option>
+				<option value="ASV">American Standard Version</option>
+				<option value="YLT">Young's Literal Translation</option>
+				<option value="DARBY">Darby Translation</option>
+				<option value="HCSB">Holman Christian Standard Bible</option>
+				<option value="NIRV">New International Reader's Version</option>
+				<option value="WYC">Wycliffe New Testament</option>
+				<option value="WE">Worldwide English (New Testament)</option>
+				<option value="NIVUK">New International Version - UK</option>
+				<option value="TNIV">Today's New International Version</option>
+				<option value="NIV1984">New International Version 1984</option>
+				<option value="RVR1960">Reina-Valera 1960</option>
+				<option value="NVI">Nueva Versión Internacional</option>
+				<option value="RVR1995">Reina-Valera 1995</option>
+				<option value="CST">Castilian</option>
+				<option value="RVA">Reina-Valera Antigua</option>
+				<option value="TLA">Traducción en lenguaje actual</option>
+				<option value="LBLA">La Biblia de las Américas</option>
+				<option value="LSG">Louis Segond</option>
+				<option value="BDS">La Bible du Semeur</option>
+				<option value="WHNU">1881 Westcott-Hort New Testament</option>
+				<option value="TR1550">1550 Stephanus New Testament</option>
+				<option value="TR1894">1894 Scrivener New Testament</option>
+				<option value="WLC">The Westminster Leningrad Codex</option>
+				<option value="HLGN">Hiligaynon Bible</option>
+				<option value="CRO">Croatian Bible</option>
+				<option value="KAR">Hungarian KÃ¡roli</option>
+				<option value="ICELAND">Icelandic Bible</option>
+				<option value="LND">La Nuova Diodati</option>
+				<option value="LM">La Parola è Vita</option>
+				<option value="JAC">Jacalteco, Oriental</option>
+				<option value="KEK">Kekchi</option>
+				<option value="MAORI">Maori Bible</option>
+				<option value="MNT">Macedonian New Testament</option>
+				<option value="MVC">Mam, Central</option>
+				<option value="MVJ">Mam de Todos Santos Chuchumatán</option>
+				<option value="REIMER">Reimer 2001</option>
+				<option value="NGU">Náhuatl de Guerrero</option>
+				<option value="HTB">Het Boek</option>
+				<option value="DNB1930">Det Norsk Bibelselskap 1930</option>
+				<option value="LB">Levande Bibeln</option>
+				<option value="OL">O Livro</option>
+				<option value="AA">João Ferreira de Almeida Atualizada</option>
+				<option value="QUT">Quiché, Centro Occidental</option>
+				<option value="RMNN">Romanian</option>
+				<option value="TLCR">Romanian</option>
+				<option value="RUSV">Russian Synodal Version</option>
+				<option value="SZ">Slovo Zhizny</option>
+				<option value="NPK">Nádej pre kazdého</option>
+				<option value="ALB">Albanian Bible</option>
+				<option value="SVL">Levande Bibeln</option>
+				<option value="SV1917">Svenska 1917</option>
+				<option value="SNT">Swahili New Testament</option>
+				<option value="SND">Ang Salita ng Diyos</option>
+				<option value="UKR">Ukrainian Bible</option>
+				<option value="USP">Uspanteco</option>
+				<option value="VIET">1934 Vietnamese Bible</option>
+				<option value="CUV">Chinese Union Version (Traditional)</option>
+				<option value="CUVS">Chinese Union Version (Simplified)</option>
+            </field>
+         <field name="spacerivx" type="spacer" default="" label="____________________" description=""></field>
+         <field name="spaceriv" type="spacer" default="" label="XML_LABEL_SPACERIV" description="XML_DESC_SPACERIV"></field>
+			<field name="modal_on" type="radio" default="1" label="XML_LABEL_MODAL_ON" description="XML_DESC_MODAL_ON">
+				<option value="0">XML_OPT_LIGHTBOX</option>
+				<option value="1">XML_OPT_POPUP</option>
+				<option value="2">XML_OPT_NEWBROWSERWINDOW</option>
+			</field>
+			<field name="spacerv" type="spacer" default="" label="" description=""></field>
+			<field name="modal_width" type="text" default="900" size="4" label="XML_LABEL_MODAL_WIDTH" description="XML_DESC_MODAL_WIDTH"></field>
+			<field name="modal_height" type="text" default="600" size="4" label="XML_LABEL_MODAL_HEIGHT" description="XML_DESC_MODAL_HEIGHT"></field>
+         </fieldset>
+      </fields>
+   </config>
+</extension>
