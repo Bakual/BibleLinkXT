@@ -34,7 +34,7 @@ class plgContentBiblelinkxt extends JPlugin {
 		// define the regular expression for the plugin
 		$regex = "/{bib=(.*)}/U";
 
-		$modal_on			= $this->params->get('modal_on','1');
+		$mode			= $this->params->get('mode', 1);
 		$modal_width		= $this->params->get('modal_width','900');
 		$modal_height		= $this->params->get('modal_height','600');
 
@@ -43,10 +43,10 @@ class plgContentBiblelinkxt extends JPlugin {
 		preg_match_all( $regex, $row->text, $matches, PREG_SET_ORDER );
 
 		foreach ($matches as $elm) {
-			$selectsource  			= $this->params->get('selectsource','BS');
-			$bibletranslationBS 	= $this->params->get('bibletranslationBS','LUT');
-			$interfacelanguage 		= $this->params->get('interfacelanguage','de');
-			$bibletranslationBG 	= $this->params->get('bibletranslationBG','LUTH1545');
+			$selectsource       = $this->params->get('source', 'BS');
+			$bibletranslationBS = $this->params->get('bibletranslationBS', 'LUT');
+			$interfacelanguage  = $this->params->get('interfacelanguage', 1);
+			$bibletranslationBG = $this->params->get('bibletranslationBG', 'LUTH1545');
 			$biblevers = "";
 			$biblevers = $elm[1];
 			$quot = "0";
@@ -86,7 +86,7 @@ class plgContentBiblelinkxt extends JPlugin {
 			if ($selectsource == "BS") { 
 				$bibletranslation = $bibletranslationBS;
 				// PopUp
-				if ($modal_on <= 1) { 
+				if ($mode <= 1) {
 					if ($quot <> "0") {
 						$modal = " title=\"" . JText::_('FRONT_TITLE_BS_POPUP') . "\" target=\"_blank\" onclick=\"Popup=window.open('http://www.bibleserver.com/index.php?language=$interfacelanguage&s=1#/search/$bibletranslationBS/$biblevers/1','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=$modal_width,height=$modal_height,left='+(screen.availWidth/2-($modal_width/2))+',top='+(screen.availHeight/2-($modal_height/2))+'');return false;\"";
 					} else {
@@ -94,19 +94,19 @@ class plgContentBiblelinkxt extends JPlugin {
 					}
 				}
 				// New Window
-				if ($modal_on == "2") $modal = " title=\"" . JText::_('FRONT_TITLE_BS_NEWWINDOW') . "\" target=\"_blank\"";
+				if ($mode == "2") $modal = " title=\"" . JText::_('FRONT_TITLE_BS_NEWWINDOW') . "\" target=\"_blank\"";
 			}
 			
 			// BibleGateway.com
 			if ($selectsource == "BG") { 
 				$bibletranslation = $bibletranslationBG;
 				// Lightbox
-				if ($modal_on == "0") { 
+				if ($mode == "0") {
 					JHTML::_( 'behavior.modal' );
 					$modal = " title=\"" . JText::_('FRONT_TITLE_BG_LIGHTBOX') . "\" target=\"_blank\"  class=\"modal\" rel=\"{handler: 'iframe', size: {x: $modal_width, y: $modal_height}, onClose: function() {}}\"";
 				}
 				// PopUp
-				if ($modal_on == "1") { 
+				if ($mode == "1") {
 					if ($quot <> "0") {
 						$modal = " title=\"" . JText::_('FRONT_TITLE_BG_POPUP') . "\" target=\"_blank\" onclick=\"Popup=window.open('http://www.biblegateway.com/quicksearch/?quicksearch=$biblevers&qs_version=$bibletranslationBG','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=$modal_width,height=$modal_height,left='+(screen.availWidth/2-($modal_width/2))+',top='+(screen.availHeight/2-($modal_height/2))+'');return false;\"";
 					} else {
@@ -114,7 +114,7 @@ class plgContentBiblelinkxt extends JPlugin {
 					}
 				}
 				// New Window
-				if ($modal_on == "2") $modal = " title=\"" . JText::_('FRONT_TITLE_BG_NEWWINDOW') . "\" target=\"_blank\"";
+				if ($mode == "2") $modal = " title=\"" . JText::_('FRONT_TITLE_BG_NEWWINDOW') . "\" target=\"_blank\"";
 			}
 			$biblevers = $this->_linkGen ($selectsource, $biblevers, $bibleversclear, $interfacelanguage, $bibletranslation, $modal, $quot, $joomla, $version, $datum);
 			$row->text = preg_replace($regex, $biblevers, $row->text,1);
