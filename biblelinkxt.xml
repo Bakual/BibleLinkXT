@@ -36,7 +36,7 @@
 					type="list"
 					label="PLG_CONTENT_BIBLELINK_XT_FIELD_BIBLETRANSLATION_LABEL"
 					description="PLG_CONTENT_BIBLELINK_XT_FIELD_BIBLETRANSLATION_DESC"
-					default="ELB"
+					default="LUT"
 					showon="source:BS"
 					>
 					<option value="LUT">LUT - Luther 1984</option>
@@ -86,9 +86,10 @@
 					type="list"
 					label="PLG_CONTENT_BIBLELINK_XT_FIELD_INTERFACELANGUAGE_LABEL"
 					description="PLG_CONTENT_BIBLELINK_XT_FIELD_INTERFACELANGUAGE_DESC"
-					default="1"
+					default=""
 					showon="source:BS"
 					>
+					<option value="">JGLOBAL_AUTO</option>
 					<option value="1">de - Deutsch</option>
 					<option value="2">en - English</option>
 					<option value="3">fr - français</option>
