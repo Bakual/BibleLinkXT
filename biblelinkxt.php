@@ -22,10 +22,10 @@ class plgContentBiblelinkxt extends JPlugin
 	/**
 	 * Will link scriptures to an online bible.
 	 *
-	 * @param   string  $context   The context of the content being passed to the plugin.
-	 * @param   object  &$row      The article object. Note $row->text is also available
-	 * @param   object  &$params   The item params
-	 * @param   int     $page      The 'page' number
+	 * @param   string $context The context of the content being passed to the plugin.
+	 * @param   object &$row    The article object. Note $row->text is also available
+	 * @param   object &$params The item params
+	 * @param   int    $page    The 'page' number
 	 *
 	 * @return void
 	 */
@@ -34,7 +34,7 @@ class plgContentBiblelinkxt extends JPlugin
 		// Define the regular expression for the plugin.
 		$regex = "/{bib=(.*)}/U";
 
-		$mode         = $this->params->get('mode', 1);
+		$mode        = $this->params->get('mode', 1);
 		$modalWidth  = $this->params->get('modal_width', '900');
 		$modalHeight = $this->params->get('modal_height', '600');
 
@@ -42,87 +42,79 @@ class plgContentBiblelinkxt extends JPlugin
 		$matches = array();
 		preg_match_all($regex, $row->text, $matches, PREG_SET_ORDER);
 
-		foreach ($matches as $elm)
+		foreach ($matches as $match)
 		{
-			$selectSource       = $this->params->get('source', 'BS');
-			$bibletranslationBS = $this->params->get('bibletranslationBS', 'LUT');
-			$bibletranslationBG = $this->params->get('bibletranslationBG', 'LUTH1545');
-			$biblevers          = $elm[1];
-			$quot               = 0;
+			$source      = $this->params->get('source', 'BS');
+			$explode     = explode('|', $match[1]);
+			$bibleVers   = array_pop($explode);
+			$translation = '';
+
+			// Detect if we want to search a phrase
+			$search = 0;
 
 			// Search exact phrase
-			if (substr($biblevers, 0, 1) == '"'
-				|| substr($biblevers, -1, 1) == '"'
-				|| substr($biblevers, 0, 6) == '&quot;'
-				|| substr($biblevers, -6, 6) == '&quot;'
+			if (substr($bibleVers, 0, 1) == '"'
+				|| substr($bibleVers, -1, 1) == '"'
+				|| substr($bibleVers, 0, 6) == '&quot;'
+				|| substr($bibleVers, -6, 6) == '&quot;'
 			)
 			{
-				$quot = 1;
+				$search = 1;
 			}
 
 			// Search words
-			if (substr($biblevers, 0, 1) == "'"
-				|| substr($biblevers, -1, 1) == "'"
-				|| substr($biblevers, 0, 5) == '&#39;'
-				|| substr($biblevers, -5, 5) == '&#39;'
+			if (substr($bibleVers, 0, 1) == "'"
+				|| substr($bibleVers, -1, 1) == "'"
+				|| substr($bibleVers, 0, 5) == '&#39;'
+				|| substr($bibleVers, -5, 5) == '&#39;'
 			)
 			{
-				$quot = 2;
+				$search = 2;
 			}
 
-			if ($quot)
+			if ($search)
 			{
-				$search    = array('"', "'", '&quot;', '&#39;');
-				$biblevers = str_replace($search, '', $biblevers);
+				$quotes    = array('"', "'", '&quot;', '&#39;');
+				$bibleVers = str_replace($quotes, '', $bibleVers);
 			}
 
-			if (strpos($biblevers, '|') !== false)
+			$bibleVersClear = $bibleVers;
+
+			if ($search == 1)
 			{
-				$bibleverssplit = explode('|', $biblevers);
-				$biblevers      = end($bibleverssplit);
-
-				if ($bibleverssplit[0] == 'BS' || $bibleverssplit[0] == 'BG')
-				{
-					// Can be either {bib=BG|Apg 1,2} or {bib=BG|ELB|Apg 1,2}
-					$selectSource = $bibleverssplit[0];
-
-					if (count($bibleverssplit) == 3)
-					{
-						if ($selectSource == 'BS')
-						{
-							$bibletranslationBS = $bibleverssplit[1];
-						}
-						else
-						{
-							$bibletranslationBG = $bibleverssplit[1];
-						}
-					}
-				}
-				else
-				{
-					// {bib=ELB|Apg 1,2}
-					if ($selectSource == 'BS')
-					{
-						$bibletranslationBS = $bibleverssplit[0];
-					}
-					else
-					{
-						$bibletranslationBG = $bibleverssplit[0];
-					}
-				}
+				$bibleVers = '%22' . $bibleVers . '%22';
 			}
 
-			$bibleversclear = $biblevers;
-
-			if ($quot == '1')
+			// Remove the plugin tags if no HTML page and jump over the rest
+			if (JFactory::getApplication()->input->get('format', 'html') != 'html')
 			{
-				$biblevers = '%22' . $biblevers . '%22';
+				$row->text = preg_replace($regex, $bibleVersClear, $row->text, 1);
+
+				continue;
+			}
+
+			// Advanced plugin use, can be either {bib=BG|Apg 1,2}, {bib=ELB|Apg 1,2} or {bib=BG|ELB|Apg 1,2}
+			// Check for OnlineBible
+			if ($explode && ($explode[0] == 'BS' || $explode[0] == 'BG'))
+			{
+				$source = array_shift($explode);
+			}
+
+			// Only possibly Bible translation left
+			if ($explode)
+			{
+				$translation = $explode[0];
 			}
 
 			// Bibleserver.com
-			if ($selectSource == 'BS')
+			if ($source == 'BS')
 			{
 				$onlineBible = 'Bibleserver';
+
+				if (!$translation)
+				{
+					$translation = $this->params->get('bibletranslationBS', 'LUT');
+				}
 
 				// Detect language
 				$interfaceLanguage = $this->params->get('interfacelanguage');
@@ -152,7 +144,7 @@ class plgContentBiblelinkxt extends JPlugin
 						'da' => 20,
 						'zh' => 21,
 					);
-					$activeLang = explode('-', JFactory::getLanguage()->getTag())[0];
+					$activeLang    = explode('-', JFactory::getLanguage()->getTag())[0];
 
 					if (isset($availableLang[$activeLang]))
 					{
@@ -169,25 +161,30 @@ class plgContentBiblelinkxt extends JPlugin
 				}
 
 				// Build URL
-				$url = 'http://www.bibleserver.com/'. $changeLanguage;
-				$url .= ($quot) ? 'search/' : 'text/';
-				$url .= $bibletranslationBS . '/' . $biblevers;
- 			}
+				$url = 'http://www.bibleserver.com/' . $changeLanguage;
+				$url .= ($search) ? 'search/' : 'text/';
+				$url .= $translation . '/' . $bibleVers;
+			}
 			// BibleGateway.com
-			elseif ($selectSource == 'BG')
+			elseif ($source == 'BG')
 			{
 				$onlineBible = 'BibleGateway';
 
+				if (!$translation)
+				{
+					$translation = $this->params->get('bibletranslationBG', 'LUTH1545');
+				}
+
 				// Build URL
 				$url = 'http://www.biblegateway.com/';
-				$url .= ($quot) ? 'quicksearch/?quicksearch=' : 'passage/?search=';
-				$url .= $biblevers;
-				$url .= ($quot) ? '&qs_version=' : '&version=';
-				$url .= $bibletranslationBG;
+				$url .= ($search) ? 'quicksearch/?quicksearch=' : 'passage/?search=';
+				$url .= $bibleVers;
+				$url .= ($search) ? '&qs_version=' : '&version=';
+				$url .= $translation;
 			}
 
 			// Lightbox
-			if ($mode == 0 && $selectSource == 'BG')
+			if ($mode == 0 && $source == 'BG')
 			{
 				// TODO: Change to Bootstrap
 				JHTML::_('behavior.modal');
@@ -196,22 +193,22 @@ class plgContentBiblelinkxt extends JPlugin
 					. ' rel="{handler:\'iframe\',size:{x:' . $modalWidth . ',y:' . $modalHeight . '},onClose:function(){}}"';
 			}
 			// PopUp
-			elseif ($mode == 1 || ($mode == 0 && $selectSource == 'BS'))
+			elseif ($mode == 1 || ($mode == 0 && $source == 'BS'))
 			{
 				$title   = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_POPUP_TITLE', $onlineBible);
 				$onclick = "Popup=window.open('" . $url . "','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,"
 					. 'width=' . $modalWidth . ',height=' . $modalHeight . ','
-					. "left='+(screen.availWidth/2-(" . $modalWidthidth . "/2))+',"
+					. "left='+(screen.availWidth/2-(" . $modalWidth . "/2))+',"
 					. "top='+(screen.availHeight/2-(" . $modalHeight . "/2)));"
 					. 'return false;"';
 
-				$link = '<a href="#" title="' . $title . '" onclick="' . $onclick . '">' . $bibleversclear . '</a>';
+				$link = '<a href="#" title="' . $title . '" onclick="' . $onclick . '">' . $bibleVersClear . '</a>';
 			}
 			// New Window
 			elseif ($mode == 2)
 			{
 				$title = JText::_('PLG_CONTENT_BIBLELINK_XT_NEWWINDOW_TITLE', $onlineBible);
-				$link  = '<a href="' . $url . '" title="' . $title . '" target="_blank">' . $bibleversclear . '</a>';
+				$link  = '<a href="' . $url . '" title="' . $title . '" target="_blank">' . $bibleVersClear . '</a>';
 			}
 
 			$row->text = preg_replace($regex, $link, $row->text, 1);
