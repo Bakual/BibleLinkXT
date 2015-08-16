@@ -35,8 +35,8 @@ class plgContentBiblelinkxt extends JPlugin
 		$regex = "/{bib=(.*)}/U";
 
 		$mode         = $this->params->get('mode', 1);
-		$modal_width  = $this->params->get('modal_width', '900');
-		$modal_height = $this->params->get('modal_height', '600');
+		$modalWidth  = $this->params->get('modal_width', '900');
+		$modalHeight = $this->params->get('modal_height', '600');
 
 		// Find all instances of plugin and put in $matches.
 		$matches = array();
@@ -44,13 +44,13 @@ class plgContentBiblelinkxt extends JPlugin
 
 		foreach ($matches as $elm)
 		{
-			$selectsource       = $this->params->get('source', 'BS');
+			$selectSource       = $this->params->get('source', 'BS');
 			$bibletranslationBS = $this->params->get('bibletranslationBS', 'LUT');
 			$bibletranslationBG = $this->params->get('bibletranslationBG', 'LUTH1545');
 			$biblevers          = $elm[1];
 			$quot               = 0;
 
-			// Search fix
+			// Search exact phrase
 			if (substr($biblevers, 0, 1) == '"'
 				|| substr($biblevers, -1, 1) == '"'
 				|| substr($biblevers, 0, 6) == '&quot;'
@@ -60,7 +60,7 @@ class plgContentBiblelinkxt extends JPlugin
 				$quot = 1;
 			}
 
-			// Search multi
+			// Search words
 			if (substr($biblevers, 0, 1) == "'"
 				|| substr($biblevers, -1, 1) == "'"
 				|| substr($biblevers, 0, 5) == '&#39;'
@@ -84,11 +84,11 @@ class plgContentBiblelinkxt extends JPlugin
 				if ($bibleverssplit[0] == 'BS' || $bibleverssplit[0] == 'BG')
 				{
 					// Can be either {bib=BG|Apg 1,2} or {bib=BG|ELB|Apg 1,2}
-					$selectsource = $bibleverssplit[0];
+					$selectSource = $bibleverssplit[0];
 
 					if (count($bibleverssplit) == 3)
 					{
-						if ($selectsource == 'BS')
+						if ($selectSource == 'BS')
 						{
 							$bibletranslationBS = $bibleverssplit[1];
 						}
@@ -101,7 +101,7 @@ class plgContentBiblelinkxt extends JPlugin
 				else
 				{
 					// {bib=ELB|Apg 1,2}
-					if ($selectsource == 'BS')
+					if ($selectSource == 'BS')
 					{
 						$bibletranslationBS = $bibleverssplit[0];
 					}
@@ -120,8 +120,10 @@ class plgContentBiblelinkxt extends JPlugin
 			}
 
 			// Bibleserver.com
-			if ($selectsource == 'BS')
+			if ($selectSource == 'BS')
 			{
+				$onlineBible = 'Bibleserver';
+
 				// Detect language
 				$interfaceLanguage = $this->params->get('interfacelanguage');
 
@@ -158,99 +160,63 @@ class plgContentBiblelinkxt extends JPlugin
 					}
 				}
 
-				// Build URL
-				$url = 'http://www.bibleserver.com/';
-
 				// Switch Language
+				$changeLanguage = '';
+
 				if ($interfaceLanguage)
 				{
-					$url .= 'index.php?language=' . $interfaceLanguage . '&s=1#/';
+					$changeLanguage = 'index.php?language=' . $interfaceLanguage . '&s=1#/';
 				}
 
+				// Build URL
+				$url = 'http://www.bibleserver.com/'. $changeLanguage;
 				$url .= ($quot) ? 'search/' : 'text/';
 				$url .= $bibletranslationBS . '/' . $biblevers;
-
-				// PopUp (Lightbox is invalid and will be PopUp as well)
-				if ($mode <= 1)
-				{
-					$title   = JText::_('PLG_CONTENT_BIBLELINK_XT_BS_POPUP_TITLE');
-					$onclick = "Popup=window.open('" . $url . "','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,"
-						. 'width=' . $modal_width . ',height=' . $modal_height . ','
-						. "left='+(screen.availWidth/2-(" . $modal_width . "/2))+',"
-						. "top='+(screen.availHeight/2-(" . $modal_height . "/2)));"
-						. 'return false;"';
-
-					$link = '<a href="#" title="' . $title . '" onclick="' . $onclick . '">' . $bibleversclear . '</a>';
-				}
-				// New Window
-				elseif ($mode == 2)
-				{
-					$title  = JText::_('PLG_CONTENT_BIBLELINK_XT_BS_NEWWINDOW_TITLE');
-					$target = '_blank';
-
-					$link = '<a href="' . $url . '" title="' . $title . '" target="' . $target . '">' . $bibleversclear . '</a>';
-				}
-			}
+ 			}
 			// BibleGateway.com
-			elseif ($selectsource == "BG")
+			elseif ($selectSource == 'BG')
 			{
-				$bibletranslation = $bibletranslationBG;
-				// Lightbox
-				if ($mode == "0")
-				{
-					JHTML::_('behavior.modal');
-					$modal = " title=\"" . JText::_('FRONT_TITLE_BG_LIGHTBOX') . "\" target=\"_blank\"  class=\"modal\" rel=\"{handler: 'iframe', size: {x: $modal_width, y: $modal_height}, onClose: function() {}}\"";
-				}
-				// PopUp
-				if ($mode == "1")
-				{
-					if ($quot <> "0")
-					{
-						$modal = " title=\"" . JText::_('FRONT_TITLE_BG_POPUP') . "\" target=\"_blank\" onclick=\"Popup=window.open('http://www.biblegateway.com/quicksearch/?quicksearch=$biblevers&qs_version=$bibletranslationBG','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=$modal_width,height=$modal_height,left='+(screen.availWidth/2-($modal_width/2))+',top='+(screen.availHeight/2-($modal_height/2))+'');return false;\"";
-					}
-					else
-					{
-						$modal = " title=\"" . JText::_('FRONT_TITLE_BG_POPUP') . "\" target=\"_blank\" onclick=\"Popup=window.open('http://www.biblegateway.com/passage/?search=$biblevers&version=$bibletranslationBG','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=$modal_width,height=$modal_height,left='+(screen.availWidth/2-($modal_width/2))+',top='+(screen.availHeight/2-($modal_height/2))+'');return false;\"";
-					}
-				}
-				// New Window
-				if ($mode == "2") $modal = " title=\"" . JText::_('FRONT_TITLE_BG_NEWWINDOW') . "\" target=\"_blank\"";
+				$onlineBible = 'BibleGateway';
+
+				// Build URL
+				$url = 'http://www.biblegateway.com/';
+				$url .= ($quot) ? 'quicksearch/?quicksearch=' : 'passage/?search=';
+				$url .= $biblevers;
+				$url .= ($quot) ? '&qs_version=' : '&version=';
+				$url .= $bibletranslationBG;
 			}
-//			$biblevers = $this->_linkGen($selectsource, $biblevers, $bibleversclear, $interfacelanguage, $bibletranslation, $modal, $quot);
+
+			// Lightbox
+			if ($mode == 0 && $selectSource == 'BG')
+			{
+				// TODO: Change to Bootstrap
+				JHTML::_('behavior.modal');
+				$title = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_LIGHTBOX_TITLE', $onlineBible);
+				$link  = '<a href="#" title="' . $title . '" class="modal"'
+					. ' rel="{handler:\'iframe\',size:{x:' . $modalWidth . ',y:' . $modalHeight . '},onClose:function(){}}"';
+			}
+			// PopUp
+			elseif ($mode == 1 || ($mode == 0 && $selectSource == 'BS'))
+			{
+				$title   = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_POPUP_TITLE', $onlineBible);
+				$onclick = "Popup=window.open('" . $url . "','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,"
+					. 'width=' . $modalWidth . ',height=' . $modalHeight . ','
+					. "left='+(screen.availWidth/2-(" . $modalWidthidth . "/2))+',"
+					. "top='+(screen.availHeight/2-(" . $modalHeight . "/2)));"
+					. 'return false;"';
+
+				$link = '<a href="#" title="' . $title . '" onclick="' . $onclick . '">' . $bibleversclear . '</a>';
+			}
+			// New Window
+			elseif ($mode == 2)
+			{
+				$title = JText::_('PLG_CONTENT_BIBLELINK_XT_NEWWINDOW_TITLE', $onlineBible);
+				$link  = '<a href="' . $url . '" title="' . $title . '" target="_blank">' . $bibleversclear . '</a>';
+			}
+
 			$row->text = preg_replace($regex, $link, $row->text, 1);
 		}
 
-		return true;
-	}
-
-	protected function _linkGen($selectsource, $biblevers, $bibleversclear, $interfacelanguage, $bibletranslation, $modal, $quot)
-	{
-		$result = "";
-		// Bibleserver.com
-		if ($selectsource == "BS")
-		{
-			if ($quot)
-			{
-				$result = "<a href=\"http://www.bibleserver.com/index.php?language=$interfacelanguage&s=1#/search/$bibletranslation/$biblevers/1\"$modal>$bibleversclear</a>";
-			}
-			else
-			{
-				$result = "<a href=\"http://www.bibleserver.com/index.php?language=$interfacelanguage&s=1#/text/$bibletranslation/$biblevers\"$modal>$bibleversclear</a>";
-			}
-		}
-		// BibleGateway.com
-		if ($selectsource == "BG")
-		{
-			if ($quot <> "0")
-			{
-				$result = "\n<!-- Begin  Version:  * (C)  by Dietmar Isenbart * Ichthys-Soft - Freeware * http://di-side.de -->\n<a href=\"http://www.biblegateway.com/quicksearch/?quicksearch=$biblevers&qs_version=$bibletranslation\"$modal>$bibleversclear</a>\n<!-- End  Version:   -->\n";
-			}
-			else
-			{
-				$result = "\n<!-- Begin  Version:  * (C)  by Dietmar Isenbart * Ichthys-Soft - Freeware * http://di-side.de -->\n<a href=\"http://www.biblegateway.com/passage/?search=$biblevers&version=$bibletranslation\"$modal>$bibleversclear</a>\n<!-- End  Version:   -->\n";
-			}
-		}
-
-		return $result;
+		return;
 	}
 }
