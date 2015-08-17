@@ -1,7 +1,6 @@
 <?php
 /**
- * @package         SermonSpeaker
- * @subpackage      Plugin.BibleLinkXT
+ * @package         BibleLinkXT
  * @author          Thomas Hunziker <admin@sermonspeaker.net>
  * @copyright   (C) 2015 - Thomas Hunziker
  * @license         http://www.gnu.org/licenses/gpl.html

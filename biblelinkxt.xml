@@ -2,8 +2,8 @@
 <extension version="3.4.0" type="plugin" group="content" method="upgrade">
 	<name>PLG_CONTENT_BIBLELINK_XT</name>
 	<author>Thomas Hunziker, Dietmar Isenbart</author>
-	<creationDate>Januar 2011</creationDate>
-	<copyright>Copyright 2011 - Dietmar Isenbart - Ichthys-Soft - Freeware</copyright>
+	<creationDate>2015-08-17</creationDate>
+	<copyright>(C) 2015</copyright>
 	<license>http://www.gnu.org/licenses/gpl.html</license>
 	<authorEmail>admin@sermonspeaker.net</authorEmail>
 	<authorUrl>http://www.sermonspeaker.net</authorUrl>
@@ -11,6 +11,7 @@
 	<description>PLG_CONTENT_BIBLELINK_XT_XML_DESCRIPTION</description>
 	<files>
 		<filename plugin="biblelinkxt">biblelinkxt.php</filename>
+		<folder>fields</folder>
 		<folder>language</folder>
 	</files>
 	<updateservers>
@@ -229,6 +230,17 @@
 					description="PLG_CONTENT_BIBLELINK_XT_FIELD_MODAL_DESC"
 					default="600"
 					showon="mode:0,1"
+				/>
+			</fieldset>
+			<fieldset
+				name="description"
+				addfieldpath="/plugins/content/biblelinkxt/fields"
+				>
+				<field
+					name="description"
+					type="description"
+					label="PLG_CONTENT_BIBLELINK_XT_FIELD_DESCRIPTION_LABEL"
+					description=""
 				/>
 			</fieldset>
 		</fields>
