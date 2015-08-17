@@ -210,7 +210,7 @@
 					class="btn-group"
 					default="1"
 					>
-					<option value="0">PLG_CONTENT_BIBLELINK_XT_FIELD_MODE_OPTION_LIGHTBOX</option>
+					<option value="0">PLG_CONTENT_BIBLELINK_XT_FIELD_MODE_OPTION_MODAL</option>
 					<option value="1">PLG_CONTENT_BIBLELINK_XT_FIELD_MODE_OPTION_POPUP</option>
 					<option value="2">PLG_CONTENT_BIBLELINK_XT_FIELD_MODE_OPTION_WINDOW</option>
 				</field>

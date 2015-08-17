@@ -20,6 +20,14 @@ class plgContentBiblelinkxt extends JPlugin
 	protected $autoloadLanguage = true;
 
 	/**
+	 * Internal counter for the modals.
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
+	private static $modalId = 0;
+
+	/**
 	 * Will link scriptures to an online bible.
 	 *
 	 * @param   string $context The context of the content being passed to the plugin.
@@ -183,14 +191,28 @@ class plgContentBiblelinkxt extends JPlugin
 				$url .= $translation;
 			}
 
-			// Lightbox
+			// Modal
 			if ($mode == 0 && $source == 'BG')
 			{
-				// TODO: Change to Bootstrap
-				JHTML::_('behavior.modal');
-				$title = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_LIGHTBOX_TITLE', $onlineBible);
-				$link  = '<a href="#" title="' . $title . '" class="modal"'
-					. ' rel="{handler:\'iframe\',size:{x:' . $modalWidth . ',y:' . $modalHeight . '},onClose:function(){}}"';
+				self::$modalId++;
+
+				// Add specific CSS to override Bootstrap default height (max-height: 400px)
+				JFactory::getDocument()->addStyleDeclaration(
+					'[id^=biblelinkxt_] .modal-body{
+						max-height: ' . $modalHeight . 'px;
+					}'
+				);
+
+				$params = array(
+					'title' => 'BibleGateway',
+					'url'   => $url . '&interface=print',
+					'width' => $modalWidth,
+					'height' => $modalHeight,
+				);
+				echo JHtml::_('bootstrap.renderModal', 'biblelinkxt_' . self::$modalId, $params);
+				$title   = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
+				$link    = '<a href="#biblelinkxt_' . self::$modalId . '" title="' . $title . '" data-toggle="modal" >'
+					. $bibleVersClear . '</a>';
 			}
 			// PopUp
 			elseif ($mode == 1 || ($mode == 0 && $source == 'BS'))
