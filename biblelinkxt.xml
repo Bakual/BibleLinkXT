@@ -9,6 +9,7 @@
 	<authorUrl>http://www.sermonspeaker.net</authorUrl>
 	<version>1.0.1</version>
 	<description>PLG_CONTENT_BIBLELINK_XT_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
 	<files>
 		<filename plugin="biblelinkxt">biblelinkxt.php</filename>
 		<folder>fields</folder>
