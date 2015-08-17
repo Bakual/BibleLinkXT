@@ -28,6 +28,14 @@ class plgContentBiblelinkxt extends JPlugin
 	private static $modalId = 0;
 
 	/**
+	 * True if CSS for modal height is loaded.
+	 *
+	 * @var    boolean
+	 * @since  1.0
+	 */
+	private static $cssLoaded = false;
+
+	/**
 	 * Will link scriptures to an online bible.
 	 *
 	 * @param   string $context The context of the content being passed to the plugin.
@@ -39,6 +47,13 @@ class plgContentBiblelinkxt extends JPlugin
 	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{
+		$htmlPage = JFactory::getApplication()->input->get('format', 'html') == 'html';
+
+		if ($htmlPage)
+		{
+			JHtml::_('bootstrap.tooltip');
+		}
+
 		// Define the regular expression for the plugin.
 		$regex = "/{bib=(.*)}/U";
 
@@ -94,7 +109,7 @@ class plgContentBiblelinkxt extends JPlugin
 			}
 
 			// Remove the plugin tags if no HTML page and jump over the rest
-			if (JFactory::getApplication()->input->get('format', 'html') != 'html')
+			if (!$htmlPage)
 			{
 				$row->text = preg_replace($regex, $bibleVersClear, $row->text, 1);
 
@@ -194,24 +209,28 @@ class plgContentBiblelinkxt extends JPlugin
 			// Modal
 			if ($mode == 0 && $source == 'BG')
 			{
-				self::$modalId++;
+				static::$modalId++;
 
 				// Add specific CSS to override Bootstrap default height (max-height: 400px)
-				JFactory::getDocument()->addStyleDeclaration(
-					'[id^=biblelinkxt_] .modal-body{
-						max-height: ' . $modalHeight . 'px;
-					}'
-				);
+				if (!static::$cssLoaded)
+				{
+					JFactory::getDocument()->addStyleDeclaration(
+						'[id^=biblelinkxt_] .modal-body{
+							max-height: ' . $modalHeight . 'px;
+						}'
+					);
+
+					static::$cssLoaded = true;
+				}
 
 				$params = array(
 					'title' => 'BibleGateway',
 					'url'   => $url . '&interface=print',
-					'width' => $modalWidth,
 					'height' => $modalHeight,
 				);
-				echo JHtml::_('bootstrap.renderModal', 'biblelinkxt_' . self::$modalId, $params);
+				echo JHtml::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $params);
 				$title   = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
-				$link    = '<a href="#biblelinkxt_' . self::$modalId . '" title="' . $title . '" data-toggle="modal" >'
+				$link    = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-toggle="modal" >'
 					. $bibleVersClear . '</a>';
 			}
 			// PopUp
@@ -224,13 +243,13 @@ class plgContentBiblelinkxt extends JPlugin
 					. "top='+(screen.availHeight/2-(" . $modalHeight . "/2)));"
 					. 'return false;"';
 
-				$link = '<a href="#" title="' . $title . '" onclick="' . $onclick . '">' . $bibleVersClear . '</a>';
+				$link = '<a href="#" title="' . $title . '" class="hasTooltip" onclick="' . $onclick . '">' . $bibleVersClear . '</a>';
 			}
 			// New Window
 			elseif ($mode == 2)
 			{
-				$title = JText::_('PLG_CONTENT_BIBLELINK_XT_NEWWINDOW_TITLE', $onlineBible);
-				$link  = '<a href="' . $url . '" title="' . $title . '" target="_blank">' . $bibleVersClear . '</a>';
+				$title = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_NEWWINDOW_TITLE', $onlineBible);
+				$link  = '<a href="' . $url . '" title="' . $title . '" class="hasTooltip" target="_blank">' . $bibleVersClear . '</a>';
 			}
 
 			$row->text = preg_replace($regex, $link, $row->text, 1);
