@@ -13,7 +13,7 @@ defined('_JEXEC') or die();
  *
  * @since  1.0.2
  */
-class Plg_BiblelinkxtInstallerScript
+class PlgContentBiblelinkxtInstallerScript
 {
 	/**
 	 * method to run before an install/update/uninstall method
