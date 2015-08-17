@@ -216,6 +216,9 @@ class plgContentBiblelinkxt extends JPlugin
 					JFactory::getDocument()->addStyleDeclaration(
 						'[id^=biblelinkxt_] .modal-body{
 							max-height: ' . $modalHeight . 'px;
+						}
+						[id^=biblelinkxt_] .modal-body iframe{
+							width: 100%;
 						}'
 					);
 
@@ -223,13 +226,13 @@ class plgContentBiblelinkxt extends JPlugin
 				}
 
 				$params = array(
-					'title' => 'BibleGateway',
-					'url'   => $url . '&interface=print',
+					'title'  => 'BibleGateway',
+					'url'    => $url . '&interface=print',
 					'height' => $modalHeight,
 				);
 				echo JHtml::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $params);
-				$title   = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
-				$link    = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-toggle="modal" >'
+				$title = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
+				$link  = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-toggle="modal" >'
 					. $bibleVersClear . '</a>';
 			}
 			// PopUp
