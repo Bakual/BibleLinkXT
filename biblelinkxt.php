@@ -225,12 +225,12 @@ class plgContentBiblelinkxt extends JPlugin
 					static::$cssLoaded = true;
 				}
 
-				$params = array(
+				$modalParams = array(
 					'title'  => 'BibleGateway',
 					'url'    => $url . '&interface=print',
 					'height' => $modalHeight,
 				);
-				echo JHtml::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $params);
+				echo JHtml::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
 				$title = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
 				$link  = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-toggle="modal" >'
 					. $bibleVersClear . '</a>';

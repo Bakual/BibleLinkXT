@@ -9,7 +9,7 @@
 defined('_JEXEC') or die();
 
 /**
- * Class Plg_BiblelinkxtInstallerScript
+ * Class PlgContentBiblelinkxtInstallerScript
  *
  * @since  1.0.2
  */
