@@ -183,7 +183,7 @@ class plgContentBiblelinkxt extends JPlugin
 				}
 
 				// Build URL
-				$url = 'http://www.bibleserver.com/' . $changeLanguage;
+				$url = 'https://www.bibleserver.com/' . $changeLanguage;
 				$url .= ($search) ? 'search/' : 'text/';
 				$url .= $translation . '/' . $bibleVers;
 			}
@@ -198,7 +198,7 @@ class plgContentBiblelinkxt extends JPlugin
 				}
 
 				// Build URL
-				$url = 'http://www.biblegateway.com/';
+				$url = 'https://www.biblegateway.com/';
 				$url .= ($search) ? 'quicksearch/?quicksearch=' : 'passage/?search=';
 				$url .= $bibleVers;
 				$url .= ($search) ? '&qs_version=' : '&version=';
