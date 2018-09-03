@@ -146,6 +146,7 @@
 					<option value="GW">GOD’S WORD Translation</option>
 					<option value="KJ21">21st Century King James Version</option>
 					<option value="ASV">American Standard Version</option>
+					<option value="CEB">Common English Bible</option>
 					<option value="YLT">Young's Literal Translation</option>
 					<option value="DARBY">Darby Translation</option>
 					<option value="HCSB">Holman Christian Standard Bible</option>
