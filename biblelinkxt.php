@@ -138,53 +138,9 @@ class plgContentBiblelinkxt extends JPlugin
 					$translation = $this->params->get('bibletranslationBS', 'LUT');
 				}
 
-				// Detect language
-				$interfaceLanguage = $this->params->get('interfacelanguage');
-
-				if (!$interfaceLanguage)
-				{
-					$availableLang = array(
-						'de' => 1,
-						'en' => 2,
-						'fr' => 3,
-						'it' => 4,
-						'es' => 5,
-						'pt' => 6,
-						'ru' => 7,
-						'sv' => 8,
-						'no' => 9,
-						'nl' => 10,
-						'cs' => 11,
-						'sk' => 12,
-						'ro' => 13,
-						'hr' => 14,
-						'hu' => 15,
-						'bg' => 16,
-						'ar' => 17,
-						'tr' => 18,
-						'pl' => 19,
-						'da' => 20,
-						'zh' => 21,
-					);
-					$activeLang    = explode('-', JFactory::getLanguage()->getTag())[0];
-
-					if (isset($availableLang[$activeLang]))
-					{
-						$interfaceLanguage = $availableLang[$activeLang];
-					}
-				}
-
-				// Switch Language
-				$changeLanguage = '';
-
-				if ($interfaceLanguage)
-				{
-					$changeLanguage = 'index.php?language=' . $interfaceLanguage . '&s=1#/';
-				}
-
 				// Build URL
-				$url = 'https://www.bibleserver.com/' . $changeLanguage;
-				$url .= ($search) ? 'search/' : 'text/';
+				$url = 'https://www.bibleserver.com/';
+				$url .= ($search) ? 'search/' : '';
 				$url .= $translation . '/' . $bibleVers;
 			}
 			// BibleGateway.com
