@@ -17,7 +17,7 @@
 	</files>
 	<updateservers>
 		<server type="extension" priority="1" name="SermonSpeaker.net">
-			http://www.sermonspeaker.net/update/plg_content_biblelinkxt.xml
+			https://www.sermonspeaker.net/update/plg_content_biblelinkxt.xml
 		</server>
 	</updateservers>
 	<config>
