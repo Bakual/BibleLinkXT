@@ -8,8 +8,27 @@
 
 defined('_JEXEC') or die;
 
-class plgContentBiblelinkxt extends JPlugin
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Plugin\CMSPlugin;
+
+class plgContentBiblelinkxt extends CMSPlugin
 {
+	/**
+	 * Internal counter for the modals.
+	 *
+	 * @var    integer
+	 * @since  1.0
+	 */
+	private static $modalId = 0;
+	/**
+	 * True if CSS for modal height is loaded.
+	 *
+	 * @var    boolean
+	 * @since  1.0
+	 */
+	private static $cssLoaded = false;
 	/**
 	 * Affects constructor behavior. If true, language files will be loaded automatically.
 	 *
@@ -19,38 +38,24 @@ class plgContentBiblelinkxt extends JPlugin
 	protected $autoloadLanguage = true;
 
 	/**
-	 * Internal counter for the modals.
-	 *
-	 * @var    integer
-	 * @since  1.0
-	 */
-	private static $modalId = 0;
-
-	/**
-	 * True if CSS for modal height is loaded.
-	 *
-	 * @var    boolean
-	 * @since  1.0
-	 */
-	private static $cssLoaded = false;
-
-	/**
 	 * Will link scriptures to an online bible.
 	 *
-	 * @param   string $context The context of the content being passed to the plugin.
-	 * @param   object &$row    The article object. Note $row->text is also available
-	 * @param   object &$params The item params
-	 * @param   int    $page    The 'page' number
+	 * @param   string  $context  The context of the content being passed to the plugin.
+	 * @param   object &$row      The article object. Note $row->text is also available
+	 * @param   object &$params   The item params
+	 * @param   int     $page     The 'page' number
 	 *
 	 * @return void
+	 *
+	 * @since ?
 	 */
 	public function onContentPrepare($context, &$row, &$params, $page = 0)
 	{
-		$htmlPage = JFactory::getApplication()->input->get('format', 'html') == 'html';
+		$htmlPage = Factory::getApplication()->input->get('format', 'html') == 'html';
 
 		if ($htmlPage)
 		{
-			JHtml::_('bootstrap.tooltip');
+			HtmlHelper::_('bootstrap.tooltip', '.hasTooltip');
 		}
 
 		// Define the regular expression for the plugin.
@@ -169,7 +174,7 @@ class plgContentBiblelinkxt extends JPlugin
 				// Add specific CSS to override Bootstrap default height (max-height: 400px)
 				if (!static::$cssLoaded)
 				{
-					JFactory::getDocument()->addStyleDeclaration(
+					Factory::getDocument()->addStyleDeclaration(
 						'[id^=biblelinkxt_] .modal-body{
 							max-height: ' . $modalHeight . 'px;
 						}
@@ -186,15 +191,15 @@ class plgContentBiblelinkxt extends JPlugin
 					'url'    => $url . '&interface=print',
 					'height' => $modalHeight,
 				);
-				echo JHtml::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
-				$title = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
+				echo HtmlHelper::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
+				$title = Text::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
 				$link  = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-toggle="modal" >'
 					. $bibleVersClear . '</a>';
 			}
 			// PopUp
 			elseif ($mode == 1 || ($mode == 0 && $source == 'BS'))
 			{
-				$title   = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_POPUP_TITLE', $onlineBible);
+				$title   = Text::sprintf('PLG_CONTENT_BIBLELINK_XT_POPUP_TITLE', $onlineBible);
 				$onclick = "Popup=window.open('" . $url . "','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,"
 					. 'width=' . $modalWidth . ',height=' . $modalHeight . ','
 					. "left='+(screen.availWidth/2-(" . $modalWidth . "/2))+',"
@@ -206,13 +211,11 @@ class plgContentBiblelinkxt extends JPlugin
 			// New Window
 			elseif ($mode == 2)
 			{
-				$title = JText::sprintf('PLG_CONTENT_BIBLELINK_XT_NEWWINDOW_TITLE', $onlineBible);
+				$title = Text::sprintf('PLG_CONTENT_BIBLELINK_XT_NEWWINDOW_TITLE', $onlineBible);
 				$link  = '<a href="' . $url . '" title="' . $title . '" class="hasTooltip" target="_blank">' . $bibleVersClear . '</a>';
 			}
 
 			$row->text = preg_replace($regex, $link, $row->text, 1);
 		}
-
-		return;
 	}
 }
