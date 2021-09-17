@@ -12,6 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Registry\Registry;
 
 class plgContentBiblelinkxt extends CMSPlugin
 {
@@ -22,13 +23,7 @@ class plgContentBiblelinkxt extends CMSPlugin
 	 * @since  1.0
 	 */
 	private static $modalId = 0;
-	/**
-	 * True if CSS for modal height is loaded.
-	 *
-	 * @var    boolean
-	 * @since  1.0
-	 */
-	private static $cssLoaded = false;
+
 	/**
 	 * Affects constructor behavior. If true, language files will be loaded automatically.
 	 *
@@ -41,8 +36,8 @@ class plgContentBiblelinkxt extends CMSPlugin
 	 * Will link scriptures to an online bible.
 	 *
 	 * @param   string  $context  The context of the content being passed to the plugin.
-	 * @param   object &$row      The article object. Note $row->text is also available
-	 * @param   object &$params   The item params
+	 * @param   \stdClass &$row      The article object. Note $row->text is also available
+	 * @param   Registry &$params   The item params
 	 * @param   int     $page     The 'page' number
 	 *
 	 * @return void
@@ -171,21 +166,6 @@ class plgContentBiblelinkxt extends CMSPlugin
 			{
 				static::$modalId++;
 
-				// Add specific CSS to override Bootstrap default height (max-height: 400px)
-				if (!static::$cssLoaded)
-				{
-					Factory::getDocument()->addStyleDeclaration(
-						'[id^=biblelinkxt_] .modal-body{
-							max-height: ' . $modalHeight . 'px;
-						}
-						[id^=biblelinkxt_] .modal-body iframe{
-							width: 100%;
-						}'
-					);
-
-					static::$cssLoaded = true;
-				}
-
 				$modalParams = array(
 					'title'  => 'BibleGateway',
 					'url'    => $url . '&interface=print',
@@ -193,7 +173,7 @@ class plgContentBiblelinkxt extends CMSPlugin
 				);
 				echo HtmlHelper::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
 				$title = Text::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
-				$link  = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-toggle="modal" >'
+				$link  = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-bs-toggle="modal" >'
 					. $bibleVersClear . '</a>';
 			}
 			// PopUp

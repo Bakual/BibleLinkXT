@@ -27,7 +27,6 @@
 					name="source"
 					type="list"
 					label="PLG_CONTENT_BIBLELINK_XT_FIELD_SOURCE_LABEL"
-					description="PLG_CONTENT_BIBLELINK_XT_FIELD_SOURCE_DESC"
 					default="BS"
 					>
 					<option value="BS">Bibleserver.com</option>
@@ -37,7 +36,6 @@
 					name="bibletranslationBS"
 					type="list"
 					label="PLG_CONTENT_BIBLELINK_XT_FIELD_BIBLETRANSLATION_LABEL"
-					description="PLG_CONTENT_BIBLELINK_XT_FIELD_BIBLETRANSLATION_DESC"
 					default="LUT"
 					showon="source:BS"
 					>
