@@ -22,7 +22,7 @@ class PlgContentBiblelinkxtInstallerScript extends InstallerScript
 	 * Minimum Joomla! version required to install the extension
 	 *
 	 * @var    string
-	 * @since  3.10.0
+	 * @since  4.0.0
 	 */
 	protected $minimumJoomla;
 }
