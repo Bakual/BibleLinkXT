@@ -8,14 +8,15 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('spacer');
+use Joomla\CMS\Form\Field\SpacerField;
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Form Field class to show the plugin description.
  *
  * @since  1.0
  */
-class JFormFieldDescription extends JFormFieldSpacer
+class JFormFieldDescription extends SpacerField
 {
 	/**
 	 * The form field type.
@@ -39,7 +40,7 @@ class JFormFieldDescription extends JFormFieldSpacer
 		$html = parent::getLabel();
 
 		// Run content plugins.
-		$html = JHtml::_('content.prepare', $html);
+		$html = HTMLHelper::_('content.prepare', $html);
 
 		return $html;
 	}
