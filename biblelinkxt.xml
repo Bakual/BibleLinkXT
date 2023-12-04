@@ -2,12 +2,12 @@
 <extension version="4.0.0" type="plugin" group="content" method="upgrade">
 	<name>PLG_CONTENT_BIBLELINK_XT</name>
 	<author>Thomas Hunziker, Dietmar Isenbart</author>
-	<creationDate>2021-09-17</creationDate>
-	<copyright>(C) 2021</copyright>
+	<creationDate>2023-12-04</creationDate>
+	<copyright>(C) 2023</copyright>
 	<license>http://www.gnu.org/licenses/gpl.html</license>
 	<authorEmail>admin@sermonspeaker.net</authorEmail>
 	<authorUrl>http://www.sermonspeaker.net</authorUrl>
-	<version>2.0.1</version>
+	<version>2.0.2</version>
 	<description>PLG_CONTENT_BIBLELINK_XT_XML_DESCRIPTION</description>
 	<scriptfile>script.php</scriptfile>
 	<files>
