@@ -28,14 +28,6 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 	private static int $modalId = 0;
 
 	/**
-	 * Affects constructor behavior. If true, language files will be loaded automatically.
-	 *
-	 * @var    boolean
-	 * @since  3.1
-	 */
-	protected $autoloadLanguage = true;
-
-	/**
 	 * Returns an array of events this subscriber will listen to.
 	 *
 	 * @return array
@@ -61,6 +53,8 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 	 */
 	public function onContentPrepare(ContentPrepareEvent $event): void
 	{
+		$this->loadLanguage();
+
 		$row = $event->getItem();
 
 		$htmlPage = Factory::getApplication()->input->get('format', 'html') == 'html';

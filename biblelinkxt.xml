@@ -13,7 +13,6 @@
 	<scriptfile>script.php</scriptfile>
 	<files>
 		<folder>Extension</folder>
-		<folder>fields</folder>
 		<folder>language</folder>
 		<folder plugin="biblelinkxt">services</folder>
 	</files>
@@ -347,17 +346,6 @@
 					description="PLG_CONTENT_BIBLELINK_XT_FIELD_MODAL_DESC"
 					default="600"
 					showon="mode:0,1"
-				/>
-			</fieldset>
-			<fieldset
-				name="description"
-				addfieldpath="/plugins/content/biblelinkxt/fields"
-				>
-				<field
-					name="description"
-					type="description"
-					label="PLG_CONTENT_BIBLELINK_XT_FIELD_DESCRIPTION_LABEL"
-					description=""
 				/>
 			</fieldset>
 		</fields>
