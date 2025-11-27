@@ -1,10 +1,10 @@
 <?php
 /**
- * @package         BibleLinkXT
- * @author          Thomas Hunziker <admin@sermonspeaker.net>
- * @copyright   (C) 2015 - Thomas Hunziker
- * @license         http://www.gnu.org/licenses/gpl.html
- **/
+ * @package     BibleLinkXT
+ * @author      Thomas Hunziker <admin@sermonspeaker.net>
+ * @copyright   © 2025 - Thomas Hunziker
+ * @license     http://www.gnu.org/licenses/gpl.html
+ */
 
 namespace Sermonspeaker\Plugin\Content\Biblelinkxt\Extension;
 
