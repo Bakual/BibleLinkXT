@@ -6,15 +6,18 @@
  * @license         http://www.gnu.org/licenses/gpl.html
  **/
 
-defined('_JEXEC') or die;
+namespace Sermonspeaker\Plugin\Content\Biblelinkxt\Extension;
 
+use Joomla\CMS\Event\Content\ContentPrepareEvent;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\Registry\Registry;
+use Joomla\Event\SubscriberInterface;
 
-class plgContentBiblelinkxt extends CMSPlugin
+defined('_JEXEC') or die;
+
+class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 {
 	/**
 	 * Internal counter for the modals.
@@ -22,7 +25,7 @@ class plgContentBiblelinkxt extends CMSPlugin
 	 * @var    integer
 	 * @since  1.0
 	 */
-	private static $modalId = 0;
+	private static int $modalId = 0;
 
 	/**
 	 * Affects constructor behavior. If true, language files will be loaded automatically.
@@ -33,19 +36,33 @@ class plgContentBiblelinkxt extends CMSPlugin
 	protected $autoloadLanguage = true;
 
 	/**
+	 * Returns an array of events this subscriber will listen to.
+	 *
+	 * @return array
+	 *
+	 * @since   7.0.0
+	 */
+	public static function getSubscribedEvents(): array
+	{
+		return [
+			'onContentPrepare' => 'onContentPrepare',
+		];
+	}
+
+	/**
 	 * Will link scriptures to an online bible.
 	 *
-	 * @param   string  $context  The context of the content being passed to the plugin.
-	 * @param   \stdClass &$row      The article object. Note $row->text is also available
-	 * @param   Registry &$params   The item params
-	 * @param   int     $page     The 'page' number
+	 * @param \Joomla\CMS\Event\Content\ContentPrepareEvent $event
 	 *
 	 * @return void
 	 *
+	 * @throws \Exception
 	 * @since ?
 	 */
-	public function onContentPrepare($context, &$row, &$params, $page = 0)
+	public function onContentPrepare(ContentPrepareEvent $event): void
 	{
+		$row = $event->getItem();
+
 		$htmlPage = Factory::getApplication()->input->get('format', 'html') == 'html';
 
 		if ($htmlPage)
@@ -75,20 +92,20 @@ class plgContentBiblelinkxt extends CMSPlugin
 			$search = 0;
 
 			// Search exact phrase
-			if (substr($bibleVers, 0, 1) == '"'
-				|| substr($bibleVers, -1, 1) == '"'
-				|| substr($bibleVers, 0, 6) == '&quot;'
-				|| substr($bibleVers, -6, 6) == '&quot;'
+			if (str_starts_with($bibleVers, '"')
+				|| str_ends_with($bibleVers, '"')
+				|| str_starts_with($bibleVers, '&quot;')
+				|| str_ends_with($bibleVers, '&quot;')
 			)
 			{
 				$search = 1;
 			}
 
 			// Search words
-			if (substr($bibleVers, 0, 1) == "'"
-				|| substr($bibleVers, -1, 1) == "'"
-				|| substr($bibleVers, 0, 5) == '&#39;'
-				|| substr($bibleVers, -5, 5) == '&#39;'
+			if (str_starts_with($bibleVers, "'")
+				|| str_ends_with($bibleVers, "'")
+				|| str_starts_with($bibleVers, '&#39;')
+				|| str_ends_with($bibleVers, '&#39;')
 			)
 			{
 				$search = 2;
