@@ -61,7 +61,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 
 		$this->loadLanguage();
 
-		$htmlPage = Factory::getApplication()->input->get('format', 'html') == 'html';
+		$htmlPage = $this->getApplication()->getInput()->getCmd('format', 'html') == 'html';
 
 		if ($htmlPage)
 		{
@@ -211,13 +211,13 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 			elseif ($mode == 1 || ($mode == 0 && $source == 'BS'))
 			{
 				$title   = Text::sprintf('PLG_CONTENT_BIBLELINK_XT_POPUP_TITLE', $onlineBible);
-				$onclick = "Popup=window.open('" . $url . "','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,"
+				$onclick = "window.open('" . $url . "','popup','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,"
 					. 'width=' . $modalWidth . ',height=' . $modalHeight . ','
 					. "left='+(screen.availWidth/2-(" . $modalWidth . "/2))+',"
 					. "top='+(screen.availHeight/2-(" . $modalHeight . "/2)));"
 					. 'return false;';
 
-				$link = '<a href="#" title="' . $title . '" class="hasTooltip" onclick="' . $onclick . '">' . $bibleVersClear . '</a>';
+				$link = '<a href="' . $url . '" target="_blank" title="' . $title . '" class="hasTooltip" onclick="' . $onclick . '">' . $bibleVersClear . '</a>';
 			}
 			// New Window
 			elseif ($mode == 2)
