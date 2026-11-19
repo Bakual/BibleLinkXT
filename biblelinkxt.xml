@@ -16,6 +16,7 @@
 		<folder>language</folder>
 		<folder plugin="biblelinkxt">services</folder>
 	</files>
+	<changelogurl>https://www.sermonspeaker.net/update/plg_content_biblelinkxt-changelog.xml</changelogurl>
 	<updateservers>
 		<server type="extension" priority="1" name="SermonSpeaker.net">
 			https://www.sermonspeaker.net/update/plg_content_biblelinkxt.xml
@@ -32,6 +33,7 @@
 					>
 					<option value="BS">Bibleserver.com</option>
 					<option value="BG">BibleGateway.com</option>
+					<option value="BT">BibliaTodo.org</option>
 				</field>
 				<field
 					name="bibletranslationBS"
@@ -318,6 +320,17 @@
 					<option value="CUVMPT">Chinese Union Version Modern Punctuation (Traditional)</option>
 					<option value="RCU17SS">Revised Chinese Union Version (Simplified Script) Shen Edition</option>
 					<option value="RCU17TS">Revised Chinese Union Version (Traditional Script) Shen Edition</option>
+				</field>
+				<field
+					name="bibletranslationBT"
+					type="list"
+					label="PLG_CONTENT_BIBLELINK_XT_FIELD_BIBLETRANSLATION_LABEL"
+					default="NTBT"
+					showon="source:BT"
+				>
+					<option value="NTBT">Nueva Traducción BibliaTodo (es)</option>
+					<option value="BTNT">BibliaTodo New Translation (en)</option>
+					<option value="NTB-BR">Nova Tradução BibliaTodo (pt)</option>
 				</field>
 				<field
 					name="mode"

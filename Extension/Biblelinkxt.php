@@ -128,7 +128,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 
 			// Advanced plugin use, can be either {bib=BG|Apg 1,2}, {bib=ELB|Apg 1,2} or {bib=BG|ELB|Apg 1,2}
 			// Check for OnlineBible
-			if ($explode && ($explode[0] == 'BS' || $explode[0] == 'BG'))
+			if ($explode && ($explode[0] == 'BS' || $explode[0] == 'BG' || $explode[0] == 'BT'))
 			{
 				$source = array_shift($explode);
 			}
@@ -170,6 +170,22 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 				$url .= $bibleVers;
 				$url .= ($search) ? '&qs_version=' : '&version=';
 				$url .= $translation;
+			}
+			// BibliaTodo.org
+			elseif ($source == 'BT')
+			{
+				$onlineBible = 'BibliaTodo';
+
+				if (!$translation)
+				{
+					$translation = $this->params->get('bibletranslationBT', 'NTBT');
+				}
+
+				// Build URL
+				$url = 'https://www.bibliatodo.org/';
+				$url .= ($translation == 'NTBT') ? 'es' : (($translation == 'BTNT') ? 'en' : 'pt');
+				$url .= '/search/' . strtolower($translation);
+				$url .= '?q=' . $bibleVers;
 			}
 
 			// Modal

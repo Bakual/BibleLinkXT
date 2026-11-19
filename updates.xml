@@ -46,6 +46,7 @@
 		<element>biblelinkxt</element>
 		<type>plugin</type>
 		<version>3.0.0</version>
+		<changelogurl>https://www.sermonspeaker.net/update/plg_content_biblelinkxt-changelog.xml</changelogurl>
 		<downloads>
 			<downloadurl type="full" format="zip">
 				https://github.com/Bakual/BibleLinkXT/archive/refs/tags/v3.0.0.zip
