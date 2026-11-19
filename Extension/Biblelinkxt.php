@@ -53,9 +53,13 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 	 */
 	public function onContentPrepare(ContentPrepareEvent $event): void
 	{
-		$this->loadLanguage();
-
 		$row = $event->getItem();
+
+		if (!isset($row->text) || !str_contains($row->text, '{bib=')) {
+			return;
+		}
+
+		$this->loadLanguage();
 
 		$htmlPage = Factory::getApplication()->input->get('format', 'html') == 'html';
 
