@@ -44,7 +44,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 	/**
 	 * Will link scriptures to an online bible.
 	 *
-	 * @param \Joomla\CMS\Event\Content\ContentPrepareEvent $event
+	 * @param   \Joomla\CMS\Event\Content\ContentPrepareEvent  $event
 	 *
 	 * @return void
 	 *
@@ -189,7 +189,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 			}
 
 			// Modal
-			if ($mode == 0 && $source == 'BG')
+			if ($mode == 0 && ($source == 'BG' || $source == 'BT'))
 			{
 				static::$modalId++;
 
@@ -198,9 +198,9 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 					'url'    => $url . '&interface=print',
 					'height' => $modalHeight,
 				);
-				echo HtmlHelper::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
+				$link  = HtmlHelper::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
 				$title = Text::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
-				$link  = '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-bs-toggle="modal" >'
+				$link  .= '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-bs-toggle="modal" >'
 					. $bibleVersClear . '</a>';
 			}
 			// PopUp
@@ -211,7 +211,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 					. 'width=' . $modalWidth . ',height=' . $modalHeight . ','
 					. "left='+(screen.availWidth/2-(" . $modalWidth . "/2))+',"
 					. "top='+(screen.availHeight/2-(" . $modalHeight . "/2)));"
-					. 'return false;"';
+					. 'return false;';
 
 				$link = '<a href="#" title="' . $title . '" class="hasTooltip" onclick="' . $onclick . '">' . $bibleVersClear . '</a>';
 			}
