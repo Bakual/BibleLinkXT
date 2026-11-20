@@ -18,11 +18,6 @@ use Joomla\CMS\Installer\InstallerScript;
  */
 class PlgContentBiblelinkxtInstallerScript extends InstallerScript
 {
-	/**
-	 * Minimum Joomla! version required to install the extension
-	 *
-	 * @var    string
-	 * @since  4.0.0
-	 */
-	protected $minimumJoomla;
+	protected $minimumJoomla = '6.0';
+	protected $minimumPhp    = '8.3';
 }
