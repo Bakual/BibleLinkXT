@@ -65,7 +65,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 
 		if ($htmlPage)
 		{
-			HtmlHelper::_('bootstrap.tooltip', '.hasTooltip');
+			HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 		}
 
 		// Define the regular expression for the plugin.
@@ -202,7 +202,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 					'url'    => $url . '&interface=print',
 					'height' => $modalHeight,
 				);
-				$link  = HtmlHelper::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
+				$link  = HTMLHelper::_('bootstrap.renderModal', 'biblelinkxt_' . static::$modalId, $modalParams);
 				$title = Text::sprintf('PLG_CONTENT_BIBLELINK_XT_MODAL_TITLE', $onlineBible);
 				$link  .= '<a href="#biblelinkxt_' . static::$modalId . '" title="' . $title . '" class="hasTooltip" data-bs-toggle="modal" >'
 					. $bibleVersClear . '</a>';
