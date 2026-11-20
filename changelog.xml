@@ -11,4 +11,14 @@
 			<item>Fixed a few small bugs</item>
 		</fix>
 	</changelog>
+	<changelog>
+		<element>biblelinkxt</element>
+		<type>plugin</type>
+		<version>3.1.1</version>
+		<addition>
+		</addition>
+		<fix>
+			<item>Fixed the modal title</item>
+		</fix>
+	</changelog>
 </changelogs>
