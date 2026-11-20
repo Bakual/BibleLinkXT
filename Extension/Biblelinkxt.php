@@ -198,7 +198,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 				static::$modalId++;
 
 				$modalParams = array(
-					'title'  => $source == 'BG' ? 'BibleGateway' : 'BibliaTodo',
+					'title'  => Text::_('PLG_CONTENT_BIBLELINK_MODAL_TITLE'),
 					'url'    => $url . '&interface=print',
 					'height' => $modalHeight,
 				);
