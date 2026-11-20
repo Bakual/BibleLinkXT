@@ -315,7 +315,7 @@
 					<option value="CSBS">Chinese Standard Bible (Simplified)</option>
 					<option value="CSBT">Chinese Standard Bible (Traditional)</option>
 					<option value="CUVS">Chinese Union Version (Simplified)</option>
-					<option value="CUVS">Chinese Union Version (Traditional)</option>
+					<option value="CUVT">Chinese Union Version (Traditional)</option>
 					<option value="CUVMPS">Chinese Union Version Modern Punctuation (Simplified)</option>
 					<option value="CUVMPT">Chinese Union Version Modern Punctuation (Traditional)</option>
 					<option value="RCU17SS">Revised Chinese Union Version (Simplified Script) Shen Edition</option>
