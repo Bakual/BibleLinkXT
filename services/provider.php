@@ -23,7 +23,7 @@ return new class () implements ServiceProviderInterface {
 	 *
 	 * @return  void
 	 *
-	 * @since   7.0.0
+	 * @since   3.0.0
 	 */
 	public function register(Container $container): void
 	{

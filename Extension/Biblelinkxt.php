@@ -32,7 +32,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 	 *
 	 * @return array
 	 *
-	 * @since   7.0.0
+	 * @since   3.0.0
 	 */
 	public static function getSubscribedEvents(): array
 	{
@@ -49,7 +49,7 @@ class Biblelinkxt extends CMSPlugin implements SubscriberInterface
 	 * @return void
 	 *
 	 * @throws \Exception
-	 * @since ?
+	 * @since 1.0.0
 	 */
 	public function onContentPrepare(ContentPrepareEvent $event): void
 	{
